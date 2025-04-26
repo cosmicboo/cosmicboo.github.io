@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'VT323', monospace;
+      background-color: #121212;
+      color: #c30010; /* Red text */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    #chat {
+      width: 80%;
+      max-width: 800px;
+      height: 70vh;
+      overflow-y: scroll;
+      padding: 10px;
+      font-size: 1.5rem;
+      text-align: left;
+      margin-bottom: 20px;
+      color: #c30010; /* Red text color */
+      /* Invisible scrollbar */
+      scrollbar-width: thin;
+      scrollbar-color: transparent transparent;
+    }
+
+    #chat::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    #chat::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+
+    #userInput {
+      background-color: #121212;
+      color: #c30010;
+      border: none;
+      font-size: 1.5rem;
+      width: 80%;
+      text-align: center;
+      padding: 10px;
+      border-top: 2px solid #c30010;
+      outline: none;
+    }
+
+    #userInput:focus {
+      border-color: #c30010;
+    }
+
+    .message {
+      margin: 10px 0;
+    }
+
+    .bot-message {
+      color: #c30010; /* Yellowish bot responses */
+    }
+
+    .user-message {
+      color: #c30010; /* Red user messages */
+    }
+
+    .error-message {
+      color: #ff0000; /* Red for errors */
+    }
+
+    .hidden-message {
+      display: none;
+      color: #c30010;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat">
+    <div class="message bot-message">YOU HAVE SEEN THROUGH THE VEIL. The crawl begins.</div>
+    <div class="message bot-message">> a trace appears where none has been</div>
+  </div>
+  <input type="text" id="userInput" placeholder="Type something..." autofocus />
+
+  <div class="hidden-message" id="hiddenMessage">> Access granted. Proceed with caution...</div>
+  <div class="hidden-message" id="errorMessage">> ERROR: Unknown command. Please try again.</div>
+
+  <script>
+const responses = {
+  "bray": "remembered.",
+  "abigail": "the world is built on lies.",
+  "wyatt": "forever.",
+  "zero": "proceed...",
+  "malakai": "liar.",
+  "tommy": "remember who you are.",
+  "riley": "open the door.",
+  "syn": "how does your garden grow?",
+  "mjf": "thank you.",
+  "sardonyx": "when the moon bleeds black, and the sun fades to grey, the herald shall call, but none will answer.",
+  "the wraith": "did you find it?",
+  "julia": "i set them free, out of the miry clay.",
+  "priestess": "friend.",
+  "black": "who opened the door?",
+  "prophecy": "system corrupted. try again later.",
+  "hint": "I am nothing, yet I make all things possible. I can be found at the start and the end, yet I am always the same. what am I?",
+  "void": "let me out.",
+  "red": "time is a flat circle.",
+  "help": "we tried to help you. it’s too late.",
+  "hello": "i've been waiting for you.",
+  "pluto": "she will be reborn.",
+  "truth": "it was never about salvation."
+};
+
+
+
+    const chat = document.getElementById("chat");
+    const userInput = document.getElementById("userInput");
+    const hiddenMessage = document.getElementById("hiddenMessage");
+    const errorMessage = document.getElementById("errorMessage");
+
+    // Handle user input
+    userInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        const userText = userInput.value.trim();
+
+        if (userText) {
+          addMessage(userText, "user-message");
+          userInput.value = ""; // Clear the input box
+
+          // Bot Response Logic based on predefined responses
+          if (responses[userText.toLowerCase()]) {
+            setTimeout(() => {
+              addMessage(responses[userText.toLowerCase()], "bot-message");
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              addMessage("> ERROR: Unknown command.", "error-message");
+            }, 1000);
+          }
+
+          // Auto-scroll to latest message
+          chat.scrollTop = chat.scrollHeight;
+        }
+      }
+    });
+
+    // Function to add messages to the chat
+    function addMessage(text, className) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", className);
+      messageDiv.textContent = `> ${text}`;
+      chat.appendChild(messageDiv);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
